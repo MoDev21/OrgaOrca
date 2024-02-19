@@ -1,5 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Rajdhani:wght@300&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --background-color: #10172D;
+    --primary-color: #10172D;
+    --secondary-color: #a2d4e7;
+    --accent-color: #0DB667;
+
+}
+
 body{
-    background-color: rgb(91, 119, 112);
+    background-color: var(--background-color);
+    font-family: 'Work Sans', sans-serif;
+    color: white;
 }
 
 
@@ -20,14 +32,16 @@ body{
     padding: 0;
     align-items: center;
     width: 100%;
-    background-color: rgb(127, 163, 154);
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    font-weight: 500;
 }
 
 .toggle{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(76, 169, 212);
+    background-color: var(--primary-color);
     border-radius: 5px;
     margin: 5px;
     align-content: center;
@@ -41,7 +55,37 @@ body{
     flex-direction: column;
     align-items: stretch;
     text-align: center;
+    gap: 10px;
 }	
+
+.form-row input{
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.form-row button{
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+}
+
+/* .form-row input[type="submit"]{
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+} */
 
 .btn-delete{
     background-color: red;
@@ -66,8 +110,8 @@ body{
 }
 
 .sidebar{
-    background-color: rgba(24, 84, 102, 0.233);
-    width: 20%;
+    background-color: var(--primary-color);
+    width: 285px;
     /* height: 100vh; */
     position: relative;
     top: 0;

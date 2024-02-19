@@ -59,7 +59,6 @@ export default function App() {
         alignItems: "flex-start",
         width: "100%",
         height: "100%",
-        backgroundColor: "rgb(67 82 89)",
         borderRadius: "5px",
 
       

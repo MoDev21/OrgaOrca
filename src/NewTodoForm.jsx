@@ -33,9 +33,9 @@ export function NewTodoForm({onSubmit}) {
             className="new-item-form"
             style={
                 {
-                    backgroundColor: 'aliceblue',
                     padding: '10px',
                     borderRadius: '8px'
+                    
                 }
             }>
             <div className="form-row">

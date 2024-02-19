@@ -1,17 +1,19 @@
 .kamban-board {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
+    overflow-x: scroll;
 }
 
 .kamban-column {
     flex: 1 0 300px;
     margin: 0 10px;
     padding: 10px;
-    background-color: #f2f2f2;
+    background-color: #3b3d5f;
     border-radius: 5px;
     height: 500px;
+    width: 200px;
     overflow-y: auto;
 }
 
@@ -31,4 +33,38 @@
 .kamban-card-description {
     font-size: 14px;
     color: #555;
+}
+
+.button-add-column {
+    background-color: #3b3d5f;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-add-column:hover {
+    background-color: #2c2e4a;
+}
+
+.button-remove-column {
+    background-color: #5f3b54;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-remove-column:hover {
+    background-color: #4a2c3e;
+}
+
+.column-header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
