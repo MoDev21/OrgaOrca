@@ -22,6 +22,8 @@ export function Todolist({ todos, toggleTodo, deleteTodo, isVisible }) {
           <TodoItem 
             {...todo} 
             key={todo.id} 
+            startTime={todo.startTime}
+            stopTime={todo.stopTime}
             toggleTodo={toggleTodo} 
             deleteTodo={deleteTodo}
             isVisible={todo.isVisible !== undefined ? todo.isVisible : true}

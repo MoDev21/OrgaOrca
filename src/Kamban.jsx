@@ -1,9 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef} from 'react';
 import './Kamban.css';
 import { TodoItem } from './TodoItem';
 
 
 const Kamban = () => {
+    const scrollRef = useRef(null);
+    const [hscrolling, setHscrolling] = useState(false);
+    
+    const startHscrolling = () => setHscrolling(true);
+    
+
+    function stopHscrolling() {
+        console.log('stopHscrolling');
+        setHscrolling(false);
+    }
+
     const [todos, setTodos] = useState(() => {
         const localValue = localStorage.getItem("COLUMN")
         if (localValue == null) return [[], [], []]
@@ -14,10 +25,28 @@ const Kamban = () => {
 
     useEffect(() => {
         localStorage.setItem("COLUMN", JSON.stringify(todos))
+
+        let interval;
+        if (hscrolling && scrollRef.current) {
+            interval = setInterval(() => {
+                scrollRef.current.scrollLeft += 1;
+                if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth) {
+                    stopHscrolling();
+                    console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
+                    console.log(scrollRef.current.scrollLeft);
+                }
+                
+            }, .01);
+        } else if (!hscrolling && interval) {
+            clearInterval(interval);
+        }
+
+        return () => clearInterval(interval);
     }, [todos])
 
     function addColumn() {
         setTodos([...todos, []]);
+        startHscrolling();
     }
 
     function removeColumn() {
@@ -77,7 +106,7 @@ const Kamban = () => {
     }
     
     return (
-        <div className="kamban-board">
+        <div className="kamban-board" ref={scrollRef}>
             {todos.map((boardTodos, boardIndex) => (
                 <div 
                     className="kamban-column" 
@@ -95,6 +124,8 @@ const Kamban = () => {
                             <TodoItem 
                                 {...todo} 
                                 key={todo.id} 
+                                startTime={todo.startTime}
+                                stopTime={todo.stopTime}
                                 toggleTodo={() => toggleTodo(boardIndex, todo.id, !todo.completed)} 
                                 deleteTodo={() => deleteTodo(boardIndex, todo.id)}
                                 isVisible={true}

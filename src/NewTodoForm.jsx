@@ -3,6 +3,8 @@ import { useState } from "react"
 export function NewTodoForm({onSubmit}) {
     
     const [newItem, setNewItem] = useState("Title")
+    const [newStartTime, setNewSartTime] = useState("StartTime")
+    const [newStopTime, setNewStopTime] = useState("StopTime")
 
 
     function handleSubmit(e) {
@@ -17,13 +19,15 @@ export function NewTodoForm({onSubmit}) {
         //     completed: false },
         //   ]
         // })
-        if (newItem === "") return
+        if ((newItem === "") || (newStartTime === "") || (newStopTime === "")) return
 
         
 
-        onSubmit(newItem)
+        onSubmit(newItem, newStartTime, newStopTime)
 
         setNewItem("")
+
+        console.log(newItem, newStartTime, newStopTime);
         
     }
 
@@ -46,12 +50,21 @@ export function NewTodoForm({onSubmit}) {
                     type="text" 
                     id="item" 
                 />
-                <input 
-                    value={newItem} 
-                    onChange={e => setNewItem(e.target.value)} 
-                    type="time" 
-                    id="item" 
-                />
+                <div className="duration">
+                    <input 
+                        value={newStartTime} 
+                        onChange={e => setNewSartTime(e.target.value)} 
+                        type="time" 
+                        id="start-time" 
+                    />
+                    <input 
+                        value={newStopTime} 
+                        onChange={e => setNewStopTime(e.target.value)} 
+                        type="time" 
+                        id="stop-time" 
+                    />
+                </div>
+
                 <button className="btn">Add</button>
             </div>
             

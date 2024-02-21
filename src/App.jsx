@@ -20,11 +20,12 @@ export default function App() {
   }, [todos])
 
 
-  function addTodo(title) {
+  function addTodo(title, startTime, stopTime) {
     setTodos((currentTodos) => {
       return [
         ...currentTodos,
-        { id: crypto.randomUUID(), title, 
+        { id: crypto.randomUUID(), title, startTime, stopTime, 
+          isVisible: true,
         completed: false },
       ]
     })

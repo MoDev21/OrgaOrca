@@ -3,8 +3,8 @@
 :root{
     --background-color: #10172D;
     --primary-color: #10172D;
-    --secondary-color: #a2d4e7;
-    --accent-color: #0DB667;
+    --secondary-color: #a963a8ad;
+    --accent-color: #21c0ff;
 
 }
 
@@ -29,12 +29,39 @@ body{
     list-style: none;
     display: flex;
     flex-direction: column;
-    padding: 0;
     align-items: center;
+    gap: 10px;
+    padding: 4px;
     width: 100%;
     background-color: var(--secondary-color);
     color: var(--background-color);
     font-weight: 500;
+}
+
+.list li p{
+    margin: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.duration{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 0 0 5px 5px;
+
+}
+
+.task-duration{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 0 0 5px 5px;
 }
 
 .toggle{
