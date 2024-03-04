@@ -82,15 +82,6 @@ const Kamban = () => {
 
     
 
-    function printSrintg() {
-        console.log('moved');
-    }
-
-    function handleKambanDragStart(boardIndex, id, e) {
-        printSrintg();
-        console.log('moved');
-
-    }
 
     function handleDrop(boardIndex, e) {
         e.preventDefault();
@@ -157,7 +148,6 @@ const Kamban = () => {
                                 isVisible={true}
                                 draggable={true}
                                 copyTodo={false}
-                                handleKambanDragStart={(e) => handleKambanDragStart(boardIndex, todo.id, e)}
                             />
                         ))}
                     </ul>

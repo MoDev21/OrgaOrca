@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo, deleteTodo, isVisible, draggable, copyTodo, handleKambanDragStart}) {
+export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo, deleteTodo, isVisible, draggable, copyTodo}) {
     draggable = draggable === undefined ? true : draggable;
     startTime = startTime === undefined ? "00:00" : startTime;
     stopTime = stopTime === undefined ? "00:00" : stopTime;
@@ -22,21 +22,12 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         isVisible: PropTypes.bool.isRequired,
         draggable: PropTypes.bool,
         copyTodo: PropTypes.bool,
-        handleKambanDragStart: PropTypes.func,
+
         
     };
 
     const handleDragStart = (e) => {
-        if(copyTodo){
-            e.dataTransfer.effectAllowed = "copy";
-            e.dataTransfer.setData("text/plain", JSON.stringify({id, title, startTime, stopTime}));
-        }
-        else{
-            e.dataTransfer.effectAllowed = "move";
-            e.dataTransfer.setData("text/plain", JSON.stringify({id, title, startTime, stopTime}));
-            console.log('drag start');
-            handleKambanDragStart();
-        }
+        e.dataTransfer.setData("text/plain", JSON.stringify({id, title, startTime, stopTime}));
     };
 
     const handleDragOver = (e) => {
