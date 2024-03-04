@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     width: 126vh;
+    height: 100%;
     overflow-x: scroll;
 }
 
@@ -67,4 +68,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+}
+
+.task-duration input{
+    background: #3c2c4a;
+    border-style: none;
+    border-radius: 10px;
+    color: #fff;
+    height: 23px;
+    font-family: 'Work Sans', sans-serif;
 }

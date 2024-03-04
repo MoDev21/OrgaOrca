@@ -8,6 +8,8 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
 
     const [newStartTime, setNewSartTime] = useState(startTime)
     const [newStopTime, setNewStopTime] = useState(stopTime)
+    const [newTitle, setNewTitle] = useState(title)
+    var [isEditingTitle, setIsEditingTitle] = useState(false);
 
     var [isEditingTime, setIsEditingTime] = useState(false);
     copyTodo ? console.log("copy") : console.log("move");
@@ -63,6 +65,16 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         console.log(newStopTime);
     }
 
+    const toggleEditTitle = () => {
+        setIsEditingTitle(!isEditingTitle);
+    }
+
+    const handleSaveTitle = () => {
+        setIsEditingTitle(false);
+        setNewTitle(newTitle);
+        console.log(newTitle);
+    }
+
     const inputEditTime = (
         <div className="task-duration">
             <input 
@@ -89,6 +101,22 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         </div>
     )
 
+    const inputEditTitle = (
+        <div className="task-duration">
+            <input
+                value={title}
+                onChange={e => setNewTitle(e.target.value)}
+                type="text"
+                id="title"
+            />
+            <button onClick={handleSaveTitle}>Save</button>
+        </div>
+    )
+
+    const pEditTitle = (
+        <p onClick={toggleEditTitle}>{title}</p>
+    )
+
     return(
         <li 
             style={{borderRadius: "5px", display: isVisible ? "flex" : "none"}} 
@@ -98,7 +126,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
             onDrop={handleDrop}
         >
             <p>
-                {title}
+                {isEditingTitle ? inputEditTitle : pEditTitle}
             </p>
             {isEditingTime ? inputEditTime : pEditTime}
             <div style={

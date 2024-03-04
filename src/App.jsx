@@ -121,7 +121,7 @@ export default function App() {
         </div>
         <div className="mainContent"
         style={{width: "100%",
-                height: "100%"}}>
+                height: "100vh"}}>
           {<Kamban />}
 
         </div>

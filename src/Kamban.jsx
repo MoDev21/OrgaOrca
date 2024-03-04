@@ -29,19 +29,23 @@ const Kamban = () => {
         let interval;
         if (hscrolling && scrollRef.current) {
             interval = setInterval(() => {
-                scrollRef.current.scrollLeft += 1;
-                if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth) {
-                    stopHscrolling();
+                console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
+                console.log(scrollRef.current.scrollLeft);
+                if (scrollRef.current.scrollLeft < (scrollRef.current.scrollWidth - scrollRef.current.clientWidth)){
+                    scrollRef.current.scrollLeft += 1;
+                }
+                else if (scrollRef.current.scrollLeft >= (scrollRef.current.scrollWidth - scrollRef.current.clientWidth)) {
+                    setHscrolling(false);
                     console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
                     console.log(scrollRef.current.scrollLeft);
+                    clearInterval(interval);
                 }
                 
             }, .01);
-        } else if (!hscrolling && interval) {
-            clearInterval(interval);
+        } else {
+            setHscrolling(false);
         }
 
-        return () => clearInterval(interval);
     }, [todos])
 
     function addColumn() {
