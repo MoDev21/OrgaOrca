@@ -80,19 +80,45 @@ const Kamban = () => {
         });
     }
 
+    
+
+    function printSrintg() {
+        console.log('moved');
+    }
+
+    function handleKambanDragStart(boardIndex, id, e) {
+        printSrintg();
+        console.log('moved');
+
+    }
+
     function handleDrop(boardIndex, e) {
         e.preventDefault();
         e.currentTarget.style.border = "none";
         const data = JSON.parse(e.dataTransfer.getData("text/plain"));
-        setTodos(currentTodos => {
-            return currentTodos.map((boardTodos, index) => {
-                if(index === boardIndex){
-                    return [...boardTodos, data];
-                }
-                return boardTodos;
+        
+        
+        if (data.boardIndex !== boardIndex) {
+           
+            
+            setTodos(currentTodos => {
+                return currentTodos.map((boardTodos, index) => {
+                    if(index === boardIndex){
+                        console.log(`boardIndex: ${boardIndex} `);
+                        return [...boardTodos, data];
+                    }
+                    else {
+                        console.log(`boardIndex: ${boardIndex} `);
+                        return boardTodos.filter(todo => todo.id !== data.id);
+                    }
+                    return boardTodos;
+                });
             });
-        });
-        console.log(data);
+
+            console.log(data);
+        }return;
+
+        
     }
 
     function handleDragOver(e) {
@@ -130,6 +156,8 @@ const Kamban = () => {
                                 deleteTodo={() => deleteTodo(boardIndex, todo.id)}
                                 isVisible={true}
                                 draggable={true}
+                                copyTodo={false}
+                                handleKambanDragStart={(e) => handleKambanDragStart(boardIndex, todo.id, e)}
                             />
                         ))}
                     </ul>

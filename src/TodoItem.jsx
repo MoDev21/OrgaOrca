@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo, deleteTodo, isVisible, draggable, copyTodo}) {
+export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo, deleteTodo, isVisible, draggable, copyTodo, handleKambanDragStart}) {
     draggable = draggable === undefined ? true : draggable;
     startTime = startTime === undefined ? "00:00" : startTime;
     stopTime = stopTime === undefined ? "00:00" : stopTime;
@@ -10,7 +10,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     const [newStopTime, setNewStopTime] = useState(stopTime)
 
     var [isEditingTime, setIsEditingTime] = useState(false);
-
+    copyTodo ? console.log("copy") : console.log("move");
     TodoItem.propTypes = {
         completed: PropTypes.bool.isRequired,
         id: PropTypes.number.isRequired,
@@ -22,6 +22,8 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         isVisible: PropTypes.bool.isRequired,
         draggable: PropTypes.bool,
         copyTodo: PropTypes.bool,
+        handleKambanDragStart: PropTypes.func,
+        
     };
 
     const handleDragStart = (e) => {
@@ -32,6 +34,8 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         else{
             e.dataTransfer.effectAllowed = "move";
             e.dataTransfer.setData("text/plain", JSON.stringify({id, title, startTime, stopTime}));
+            console.log('drag start');
+            handleKambanDragStart();
         }
     };
 
@@ -42,6 +46,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     const handleDrop = (e) => {
         e.preventDefault();
         const data = JSON.parse(e.dataTransfer.getData("text/plain"));
+        
         console.log(data);
     }
 
