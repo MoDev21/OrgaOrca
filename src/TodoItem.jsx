@@ -83,6 +83,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
                 type="time" 
                 id="start-time" 
             />
+            <p>to</p>
             <input 
                 value={newStopTime} 
                 onChange={handleStopTimeChange} 

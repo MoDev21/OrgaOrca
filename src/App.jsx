@@ -4,6 +4,7 @@ import { NewTodoForm } from "./NewTodoForm"
 import { Todolist } from "./TodoList"
 import OrcaCalendar from "./Calendar";
 import Kamban from "./Kamban";
+import Calendar from "react-calendar";
 
 export default function App() {
 
@@ -50,20 +51,9 @@ export default function App() {
     })
   }
 
-
   return ( 
     <>
-      <div style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        width: "100%",
-        height: "100%",
-        borderRadius: "5px",
-
-      
-      }}>
+      <div className="app">
         <div className="sidebar">
           <h1 className="header"
           style={{

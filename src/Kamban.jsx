@@ -10,9 +10,10 @@ const Kamban = () => {
     const startHscrolling = () => setHscrolling(true);
     
 
-    function stopHscrolling() {
+    function stopHscrolling(interval) {
         console.log('stopHscrolling');
         setHscrolling(false);
+        clearInterval(interval);
     }
 
     const [todos, setTodos] = useState(() => {
@@ -27,15 +28,17 @@ const Kamban = () => {
         localStorage.setItem("COLUMN", JSON.stringify(todos))
 
         let interval;
+        let scrollSpeed = 2;
         if (hscrolling && scrollRef.current) {
             interval = setInterval(() => {
                 console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
                 console.log(scrollRef.current.scrollLeft);
                 if (scrollRef.current.scrollLeft < (scrollRef.current.scrollWidth - scrollRef.current.clientWidth)){
-                    scrollRef.current.scrollLeft += 1;
+                    
+                    scrollRef.current.scrollLeft += scrollSpeed;
+                    
                 }
                 else if (scrollRef.current.scrollLeft >= (scrollRef.current.scrollWidth - scrollRef.current.clientWidth)) {
-                    setHscrolling(false);
                     console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
                     console.log(scrollRef.current.scrollLeft);
                     clearInterval(interval);
@@ -125,9 +128,27 @@ const Kamban = () => {
         e.preventDefault();
         e.currentTarget.style.border = "none";
     }
+
+    const handleWheel = (e) => {
+        e.preventDefault();
+        scrollRef.current.scrollLeft -= (e.deltaY * 1);
+        clearInterval(interval);
+    };
+
+    const onKambanHover = (e) => {
+        e.preventDefault();
+        document.body.style.overflowY = "hidden";
+    }
+
+    const onKambanHoverLeave = (e) => {
+        e.preventDefault();
+        e.currentTarget.style.border = "none";
+        document.body.style.overflowY = "auto";
+    }
+    
     
     return (
-        <div className="kamban-board" ref={scrollRef}>
+        <div className="kamban-board" ref={scrollRef} onWheel={handleWheel} onMouseEnter={onKambanHover} onMouseLeave={onKambanHoverLeave}>
             {todos.map((boardTodos, boardIndex) => (
                 <div 
                     className="kamban-column" 
