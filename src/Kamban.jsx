@@ -167,8 +167,8 @@ const Kamban = () => {
                     handleDrop={handleDrop}
                     removeColumn={removeColumn}
                     addColumn={addColumn}
-                    toggleTodoList={toggleTodo}
-                    deleteTodoList={deleteTodo}
+                    toggleTodo={toggleTodo}
+                    deleteTodo={deleteTodo}
                     draggable={true}
                     copyTodo={true}
                 />

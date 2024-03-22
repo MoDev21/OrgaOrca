@@ -8,7 +8,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
 
     const [newStartTime, setNewSartTime] = useState(startTime)
     const [newStopTime, setNewStopTime] = useState(stopTime)
-    const [newTitle, setNewTitle] = useState(title)
+    const [newTitle, setNewTitle] = useState()
     var [isEditingTitle, setIsEditingTitle] = useState(false);
 
     var [isEditingTime, setIsEditingTime] = useState(false);
@@ -59,7 +59,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
 
     const handleTitleChange = (e) => {
         setNewTitle(e.target.value);
-        console.log(e.target.value);
+        console.log(`columnTitle: ${newTitle}`);
     }
     
     const handleSaveTime = () => {
@@ -76,7 +76,6 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
 
     const handleSaveTitle = () => {
         setIsEditingTitle(false);
-        setNewTitle(newTitle);
         console.log(newTitle);
     }
 
@@ -112,7 +111,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     const inputEditTitle = (
         <div className="task-duration">
             <input
-                value={title}
+                value={newTitle ? newTitle : title}
                 onChange={handleTitleChange}
                 type="text"
                 id="title"
@@ -122,7 +121,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     )
 
     const pEditTitle = (
-        <p onClick={toggleEditTitle}>{title}</p>
+        <p onClick={toggleEditTitle}>{newTitle ? newTitle : title}</p>
     )
 
     return(
