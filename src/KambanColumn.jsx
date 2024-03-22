@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TodoItem } from './TodoItem';
 
-export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDragLeave, handleDrop, toggleTodo, deleteTodo,  draggable, copyTodo, removeColumn, isEditingColumnTitle, setIsEditingColumnTitle}) {
+export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDragLeave, handleDrop, toggleTodo, deleteTodo,  draggable, copyTodo, removeColumn}) {
     draggable = draggable === undefined ? true : draggable;
     const [columnTitle, setColumnTitle] = useState(() => {
         const localValue = localStorage.getItem("COLUMN_TITLE")
+        if (boardIndex == 0) return "To do"
+        if (boardIndex == 1) return "In Progress"
+        if (boardIndex == 2) return "Done"
         if (localValue == null) return "Column Title"
         console.log('1', JSON.parse(localValue));
         return JSON.parse(localValue)
     });
     const [selectedColumnIndex, setSelectedColumnIndex] = useState(0);
-    const [newTitle, setNewTitle] = useState(columnTitle);
-    var [isEditingTitle, setIsEditingTitle] = useState(false);
-    var [isEditingTime, setIsEditingTime] = useState(false);
+    const [isEditingColumnTitle, setIsEditingColumnTitle] = useState(false); // [setIsEditingColumnTitle]
     
 
     

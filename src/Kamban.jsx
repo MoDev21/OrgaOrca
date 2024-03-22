@@ -7,7 +7,7 @@ import { KambanColumn } from './KambanColumn';
 const Kamban = () => {
     const scrollRef = useRef(null);
     const [hscrolling, setHscrolling] = useState(false);
-    const [isEditingColumnTitle, setIsEditingColumnTitle] = useState(false); // [setIsEditingColumnTitle]
+
 
     const [selectedColumnIndex, setSelectedColumnIndex] = useState(0);
     const startHscrolling = () => setHscrolling(true);
@@ -155,38 +155,6 @@ const Kamban = () => {
         document.body.style.overflowY = "auto";
     }
 
-    // const toggleEditColumnTitle = (e, index) => {
-    //     setIsEditingColumnTitle(!isEditingColumnTitle);
-    //     setSelectedColumnIndex(index);
-    //     console.log(`isEditingColumnTitle: ${isEditingColumnTitle} and e ${setSelectedColumnIndex}`);
-    // }
-
-    // const handleColumnTitleChange = (e) => {
-    //     setColumnTitle(e.target.value);
-    //     console.log(`columnTitle: ${columnTitle}`);
-    // }
-
-    // const saveColumnTitle = () => {
-    //     setIsEditingColumnTitle(!isEditingColumnTitle);
-    //     console.log(`isEditingColumnTitle: ${isEditingColumnTitle}`);
-    // }
-
-    // const inputEditColumnTitle = (
-    //     <div className="column-title">
-    //         <input  
-    //             value={columnTitle}
-    //             onChange={handleColumnTitleChange}
-    //             onBlur={saveColumnTitle}
-    //         />
-    //         <button onClick={saveColumnTitle}>Save</button>
-    //     </div>
-    // ) 
-
-    // const consoleLog = (boardTodos, boardIndex) => {
-    //     console.log(boardTodos, boardIndex);
-    // }
-    
-    
     return (
         <div className="kamban-board" ref={scrollRef} onWheel={handleWheel} onMouseEnter={onKambanHover} onMouseLeave={onKambanHoverLeave}>
             {todos.map((boardTodos, boardIndex) => (
@@ -197,8 +165,6 @@ const Kamban = () => {
                     handleDragOver={handleDragOver}
                     handleDragLeave={handleDragLeave}
                     handleDrop={handleDrop}
-                    isEditingColumnTitle={isEditingColumnTitle}
-                    setIsEditingColumnTitle={setIsEditingColumnTitle}
                     removeColumn={removeColumn}
                     addColumn={addColumn}
                     toggleTodoList={toggleTodo}
