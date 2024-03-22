@@ -12,7 +12,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     var [isEditingTitle, setIsEditingTitle] = useState(false);
 
     var [isEditingTime, setIsEditingTime] = useState(false);
-    copyTodo ? console.log("copy") : console.log("move");
+
     TodoItem.propTypes = {
         completed: PropTypes.bool.isRequired,
         id: PropTypes.number.isRequired,
@@ -56,6 +56,11 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     const toggleEditTime = () => {
         setIsEditingTime(!isEditingTime);
     }  
+
+    const handleTitleChange = (e) => {
+        setNewTitle(e.target.value);
+        console.log(e.target.value);
+    }
     
     const handleSaveTime = () => {
         setIsEditingTime(false);
@@ -74,6 +79,8 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         setNewTitle(newTitle);
         console.log(newTitle);
     }
+
+
 
     const inputEditTime = (
         <div className="task-duration">
@@ -106,7 +113,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         <div className="task-duration">
             <input
                 value={title}
-                onChange={e => setNewTitle(e.target.value)}
+                onChange={handleTitleChange}
                 type="text"
                 id="title"
             />
@@ -137,7 +144,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
                     flexDirection: "row",
                     borderRadius: "5px",
                 }
-            }>
+            }>   
                 <label className="toggle" style={
                     {
                         backgroundColor: completed ? "#8bc34a" : "#7b9aa3",

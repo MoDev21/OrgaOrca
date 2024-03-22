@@ -1,12 +1,15 @@
 import { useEffect, useState, useRef} from 'react';
 import './Kamban.css';
 import { TodoItem } from './TodoItem';
+import { KambanColumn } from './KambanColumn';
 
 
 const Kamban = () => {
     const scrollRef = useRef(null);
     const [hscrolling, setHscrolling] = useState(false);
-    
+    const [isEditingColumnTitle, setIsEditingColumnTitle] = useState(false); // [setIsEditingColumnTitle]
+
+    const [selectedColumnIndex, setSelectedColumnIndex] = useState(0);
     const startHscrolling = () => setHscrolling(true);
     
 
@@ -16,6 +19,8 @@ const Kamban = () => {
         clearInterval(interval);
     }
 
+
+
     const [todos, setTodos] = useState(() => {
         const localValue = localStorage.getItem("COLUMN")
         if (localValue == null) return [[], [], []]
@@ -23,6 +28,10 @@ const Kamban = () => {
         return JSON.parse(localValue)
 
     });
+
+    console.log(todos);
+
+
 
     useEffect(() => {
         localStorage.setItem("COLUMN", JSON.stringify(todos))
@@ -145,39 +154,90 @@ const Kamban = () => {
         e.currentTarget.style.border = "none";
         document.body.style.overflowY = "auto";
     }
+
+    // const toggleEditColumnTitle = (e, index) => {
+    //     setIsEditingColumnTitle(!isEditingColumnTitle);
+    //     setSelectedColumnIndex(index);
+    //     console.log(`isEditingColumnTitle: ${isEditingColumnTitle} and e ${setSelectedColumnIndex}`);
+    // }
+
+    // const handleColumnTitleChange = (e) => {
+    //     setColumnTitle(e.target.value);
+    //     console.log(`columnTitle: ${columnTitle}`);
+    // }
+
+    // const saveColumnTitle = () => {
+    //     setIsEditingColumnTitle(!isEditingColumnTitle);
+    //     console.log(`isEditingColumnTitle: ${isEditingColumnTitle}`);
+    // }
+
+    // const inputEditColumnTitle = (
+    //     <div className="column-title">
+    //         <input  
+    //             value={columnTitle}
+    //             onChange={handleColumnTitleChange}
+    //             onBlur={saveColumnTitle}
+    //         />
+    //         <button onClick={saveColumnTitle}>Save</button>
+    //     </div>
+    // ) 
+
+    // const consoleLog = (boardTodos, boardIndex) => {
+    //     console.log(boardTodos, boardIndex);
+    // }
     
     
     return (
         <div className="kamban-board" ref={scrollRef} onWheel={handleWheel} onMouseEnter={onKambanHover} onMouseLeave={onKambanHoverLeave}>
             {todos.map((boardTodos, boardIndex) => (
-                <div 
-                    className="kamban-column" 
+                <KambanColumn
                     key={boardIndex}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={e => handleDrop(boardIndex, e)}
-                >
-                    <div className="column-header">
-                        <button onClick={removeColumn} className='button-remove-column'>Remove Column</button>
-                        <h2>{boardIndex === 0 ? "To Do" : boardIndex === 1 ? "In Progress" : "Done"}</h2>
-                    </div>
-                    <ul className='list'>
-                        {boardTodos.map(todo => (
-                            <TodoItem 
-                                {...todo} 
-                                key={todo.id} 
-                                startTime={todo.startTime}
-                                stopTime={todo.stopTime}
-                                toggleTodo={() => toggleTodo(boardIndex, todo.id, !todo.completed)} 
-                                deleteTodo={() => deleteTodo(boardIndex, todo.id)}
-                                isVisible={true}
-                                draggable={true}
-                                copyTodo={false}
-                            />
-                        ))}
-                    </ul>
+                    boardTodos={boardTodos}
+                    boardIndex={boardIndex}
+                    handleDragOver={handleDragOver}
+                    handleDragLeave={handleDragLeave}
+                    handleDrop={handleDrop}
+                    isEditingColumnTitle={isEditingColumnTitle}
+                    setIsEditingColumnTitle={setIsEditingColumnTitle}
+                    removeColumn={removeColumn}
+                    addColumn={addColumn}
+                    toggleTodoList={toggleTodo}
+                    deleteTodoList={deleteTodo}
+                    draggable={true}
+                    copyTodo={true}
+                />
+                // <div 
+                //     className="kamban-column" 
+                //     key={boardIndex}
+                //     onDragOver={handleDragOver}
+                //     onDragLeave={handleDragLeave}
+                //     onDrop={e => handleDrop(boardIndex, e)}
+                //     onAuxClick={consoleLog(boardTodos)}
+                // >
+                //     <div 
+                //         className="column-header"
+                //     >
+                //         <button onClick={removeColumn} className='button-remove-column'>Remove Column</button>
+                //         {isEditingColumnTitle && boardIndex === selectedColumnIndex ? inputEditColumnTitle : <h2 value={boardIndex} onClick={e => toggleEditColumnTitle(e, boardIndex)}>{ boardIndex === selectedColumnIndex ? columnTitle : 'null'}</h2>}
+                        
+                //     </div>
+                //     <ul className='list'>
+                //         {boardTodos.map(todo => (
+                //             <TodoItem
+                //                 {...todo}
+                //                 key={todo.id}
+                //                 startTime={todo.startTime}
+                //                 stopTime={todo.stopTime}
+                //                 toggleTodo={() => toggleTodo(boardIndex, todo.id, !todo.completed)}
+                //                 deleteTodo={() => deleteTodo(boardIndex, todo.id)}
+                //                 isVisible={true}
+                //                 draggable={true}
+                //                 copyTodo={false}
+                //             />
+                //         ))}
+                //     </ul>
                     
-                </div>
+                // </div>
             ))}
             <button onClick={addColumn} className='button-add-column'>Add Column</button>
         </div>

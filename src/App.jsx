@@ -25,9 +25,12 @@ export default function App() {
     setTodos((currentTodos) => {
       return [
         ...currentTodos,
-        { id: crypto.randomUUID(), title, startTime, stopTime, 
+        { id: crypto.randomUUID(), 
+          title, 
+          startTime, 
+          stopTime, 
           isVisible: true,
-        completed: false },
+          completed: false },
       ]
     })
   }
