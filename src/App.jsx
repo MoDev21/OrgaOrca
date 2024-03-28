@@ -47,6 +47,45 @@ export default function App() {
     })
   }
 
+  function editTodo(id, newTitle) {
+    console.log(`newTitle: ${newTitle}`);
+    console.log(`todos: ${todos[1].title}`);  // Log the new title to the console (newTitle);
+    setTodos(currentTodos => {
+      return currentTodos.map(todo => {
+        if(todo.id === id){
+          return { ...todo, title: newTitle}
+          
+        }
+        
+        return todo
+      })
+    })
+    // Log the updated todos array to the console (`todos);
+  }
+
+  function editStartTime(id, newStartTime) {
+    setTodos(currentTodos => {
+      return currentTodos.map(todo => {
+        if(todo.id === id){
+          return { ...todo, startTime: newStartTime}
+        }
+        
+        return todo
+      })
+    })
+  }
+
+  function editStopTime(id, newStopTime) {
+    setTodos(currentTodos => {
+      return currentTodos.map(todo => {
+        if(todo.id === id){
+          return { ...todo, stopTime: newStopTime}
+        }
+        
+        return todo
+      })
+    })
+  }
 
   function deleteTodo(id) {
     setTodos(currentTodos => {
@@ -115,7 +154,9 @@ export default function App() {
         <div className="mainContent"
         style={{width: "100%",
                 height: "100vh"}}>
-          {<Kamban />}
+          {<Kamban 
+            editTodo={editTodo}
+          />}
 
         </div>
       </div>

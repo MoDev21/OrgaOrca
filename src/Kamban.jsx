@@ -1,16 +1,21 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState, useRef} from 'react';
 import './Kamban.css';
 import { TodoItem } from './TodoItem';
 import { KambanColumn } from './KambanColumn';
 
 
-const Kamban = () => {
+const Kamban = (editTodo) => {
     const scrollRef = useRef(null);
     const [hscrolling, setHscrolling] = useState(false);
 
 
     const [selectedColumnIndex, setSelectedColumnIndex] = useState(0);
     const startHscrolling = () => setHscrolling(true);
+
+
+
+    let transitionSpeed = 330;
     
 
     function stopHscrolling(interval) {
@@ -18,7 +23,6 @@ const Kamban = () => {
         setHscrolling(false);
         clearInterval(interval);
     }
-
 
 
     const [todos, setTodos] = useState(() => {
@@ -38,6 +42,7 @@ const Kamban = () => {
 
         let interval;
         let scrollSpeed = 2;
+        
         if (hscrolling && scrollRef.current) {
             interval = setInterval(() => {
                 console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
@@ -50,6 +55,8 @@ const Kamban = () => {
                 else if (scrollRef.current.scrollLeft >= (scrollRef.current.scrollWidth - scrollRef.current.clientWidth)) {
                     console.log(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
                     console.log(scrollRef.current.scrollLeft);
+                    console.log(`hscrolling ${hscrolling}`);
+                    setHscrolling(false);
                     clearInterval(interval);
                 }
                 
@@ -63,6 +70,7 @@ const Kamban = () => {
     function addColumn() {
         setTodos([...todos, []]);
         startHscrolling();
+        
     }
 
     function removeColumn() {
@@ -101,17 +109,17 @@ const Kamban = () => {
 
     function handleDrop(boardIndex, e) {
         e.preventDefault();
-        e.currentTarget.style.border = "none";
         const data = JSON.parse(e.dataTransfer.getData("text/plain"));
-        
+        e.currentTarget.style.transition = transitionSpeed + "ms";
+        e.currentTarget.style.scale = 1;
         
         if (data.boardIndex !== boardIndex) {
-           
             
             setTodos(currentTodos => {
                 return currentTodos.map((boardTodos, index) => {
                     if(index === boardIndex){
-                        console.log(`boardIndex: ${boardIndex} `);
+                        console.log(`boardIndex: ${boardIndex} index: ${index} `);
+                        console.log(boardTodos);
                         return [...boardTodos, data];
                     }
                     else {
@@ -121,7 +129,7 @@ const Kamban = () => {
                     return boardTodos;
                 });
             });
-
+            console.log(data.boardIndex, boardIndex);
             console.log(data);
         }return;
 
@@ -130,12 +138,14 @@ const Kamban = () => {
 
     function handleDragOver(e) {
         e.preventDefault();
-        e.currentTarget.style.border = "2px solid black";
+        e.currentTarget.style.transition = transitionSpeed + "ms";
+        e.currentTarget.style.scale = 1.05;
     }
 
     function handleDragLeave(e) {
         e.preventDefault();
-        e.currentTarget.style.border = "none";
+        e.currentTarget.style.transition = transitionSpeed + "ms";
+        e.currentTarget.style.scale = 1;
     }
 
     const handleWheel = (e) => {
@@ -151,7 +161,6 @@ const Kamban = () => {
 
     const onKambanHoverLeave = (e) => {
         e.preventDefault();
-        e.currentTarget.style.border = "none";
         document.body.style.overflowY = "auto";
     }
 
@@ -171,39 +180,8 @@ const Kamban = () => {
                     deleteTodo={deleteTodo}
                     draggable={true}
                     copyTodo={true}
+                    editTodo={editTodo}
                 />
-                // <div 
-                //     className="kamban-column" 
-                //     key={boardIndex}
-                //     onDragOver={handleDragOver}
-                //     onDragLeave={handleDragLeave}
-                //     onDrop={e => handleDrop(boardIndex, e)}
-                //     onAuxClick={consoleLog(boardTodos)}
-                // >
-                //     <div 
-                //         className="column-header"
-                //     >
-                //         <button onClick={removeColumn} className='button-remove-column'>Remove Column</button>
-                //         {isEditingColumnTitle && boardIndex === selectedColumnIndex ? inputEditColumnTitle : <h2 value={boardIndex} onClick={e => toggleEditColumnTitle(e, boardIndex)}>{ boardIndex === selectedColumnIndex ? columnTitle : 'null'}</h2>}
-                        
-                //     </div>
-                //     <ul className='list'>
-                //         {boardTodos.map(todo => (
-                //             <TodoItem
-                //                 {...todo}
-                //                 key={todo.id}
-                //                 startTime={todo.startTime}
-                //                 stopTime={todo.stopTime}
-                //                 toggleTodo={() => toggleTodo(boardIndex, todo.id, !todo.completed)}
-                //                 deleteTodo={() => deleteTodo(boardIndex, todo.id)}
-                //                 isVisible={true}
-                //                 draggable={true}
-                //                 copyTodo={false}
-                //             />
-                //         ))}
-                //     </ul>
-                    
-                // </div>
             ))}
             <button onClick={addColumn} className='button-add-column'>Add Column</button>
         </div>

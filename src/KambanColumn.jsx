@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TodoItem } from './TodoItem';
 
-export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDragLeave, handleDrop, toggleTodo, deleteTodo,  draggable, copyTodo, removeColumn}) {
+export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDragLeave, handleDrop, editTodo, toggleTodo, deleteTodo, draggable, copyTodo, removeColumn}) {
     draggable = draggable === undefined ? true : draggable;
     const [columnTitle, setColumnTitle] = useState(() => {
         const localValue = localStorage.getItem("COLUMN_TITLE")
@@ -32,7 +32,7 @@ export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDrag
         isEditingColumnTitle: PropTypes.bool.isRequired,
         setIsEditingColumnTitle: PropTypes.func.isRequired,
         setColumnTitle: PropTypes.func.isRequired,
-        removeColumn: PropTypes.func.isRequired
+        removeColumn: PropTypes.func.isRequired,
         
     };
 
@@ -84,7 +84,7 @@ export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDrag
                 className="column-header"
             >
                 <button onClick={removeColumn} className='button-remove-column'>Remove Column</button>
-                {isEditingColumnTitle && boardIndex === selectedColumnIndex ? inputEditColumnTitle : <h2 value={boardIndex} onClick={e => toggleEditColumnTitle(e, boardIndex)}>{ columnTitle }</h2>}
+                {isEditingColumnTitle && boardIndex === selectedColumnIndex ? inputEditColumnTitle : <h2 value={boardIndex} onClick={e => toggleEditColumnTitle(e, boardIndex)} onKeyDown={e => e.key === 'Enter' ? saveColumnTitle() : null}>{ columnTitle }</h2>}
                 
             </div>
             <ul className='list'>
@@ -99,6 +99,7 @@ export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDrag
                         isVisible={true}
                         draggable={true}
                         copyTodo={false}
+                        editTodo={editTodo}
                     />
                 ))}
             </ul>

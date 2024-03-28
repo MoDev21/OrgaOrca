@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo, deleteTodo, isVisible, draggable, copyTodo}) {
+export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo, deleteTodo, isVisible, draggable, copyTodo, editTodo, editStartTime, editStopTime}) {
     draggable = draggable === undefined ? true : draggable;
     startTime = startTime === undefined ? "00:00" : startTime;
     stopTime = stopTime === undefined ? "00:00" : stopTime;
 
     const [newStartTime, setNewSartTime] = useState(startTime)
     const [newStopTime, setNewStopTime] = useState(stopTime)
-    const [newTitle, setNewTitle] = useState()
+    const [newTitle, setNewTitle] = useState(title)
     var [isEditingTitle, setIsEditingTitle] = useState(false);
 
     var [isEditingTime, setIsEditingTime] = useState(false);
@@ -24,9 +24,37 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         isVisible: PropTypes.bool.isRequired,
         draggable: PropTypes.bool,
         copyTodo: PropTypes.bool,
-
+        editTodo: PropTypes.func.isRequired
         
     };
+
+    const handleTitleChange = (e) => {
+        
+        setNewTitle(e.target.value);
+        title = newTitle;
+        editTodo.editTodo(e, title);
+        console.log(`columnTitle: ${title}`);
+    }
+    
+    const handleSaveTime = () => {
+        setIsEditingTime(false);
+        setNewSartTime(newStartTime);
+        setNewStopTime(newStopTime);
+        console.log(newStartTime);
+        console.log(newStopTime);
+    }
+
+    const toggleEditTitle = () => {
+        setIsEditingTitle(!isEditingTitle);
+    }
+
+    const handleSaveTitle = (e) => {
+        setIsEditingTitle(false);
+        
+        console.log(newTitle);
+    }
+
+
 
     const handleDragStart = (e) => {
         e.dataTransfer.setData("text/plain", JSON.stringify({id, title, startTime, stopTime}));
@@ -44,6 +72,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     }
 
     const handleStartTimeChange = (e) => {
+        
         setNewSartTime(e.target.value);
         console.log(e.target.value);
     }
@@ -56,28 +85,6 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     const toggleEditTime = () => {
         setIsEditingTime(!isEditingTime);
     }  
-
-    const handleTitleChange = (e) => {
-        setNewTitle(e.target.value);
-        console.log(`columnTitle: ${newTitle}`);
-    }
-    
-    const handleSaveTime = () => {
-        setIsEditingTime(false);
-        setNewSartTime(newStartTime);
-        setNewStopTime(newStopTime);
-        console.log(newStartTime);
-        console.log(newStopTime);
-    }
-
-    const toggleEditTitle = () => {
-        setIsEditingTitle(!isEditingTitle);
-    }
-
-    const handleSaveTitle = () => {
-        setIsEditingTitle(false);
-        console.log(newTitle);
-    }
 
 
 

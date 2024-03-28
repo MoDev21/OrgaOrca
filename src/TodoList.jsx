@@ -11,7 +11,7 @@ import {TodoItem} from './TodoItem'
  * @param {boolean} isVisible - The visibility status of the todo list.
  * @returns {JSX.Element} The rendered todo list.
  */
-export function Todolist({ todos, toggleTodo, deleteTodo, isVisible }) {
+export function Todolist({ todos, toggleTodo, deleteTodo, isVisible, copyTodo, editTodo }) {
   console.log('Todolist ' + isVisible)
   return( 
     <ul className="list">
@@ -28,6 +28,8 @@ export function Todolist({ todos, toggleTodo, deleteTodo, isVisible }) {
             deleteTodo={deleteTodo}
             isVisible={todo.isVisible !== undefined ? todo.isVisible : true}
             draggable={true}
+            copyTodo={true}
+            editTodo={editTodo}
           />             
         )
       })}
