@@ -5,8 +5,8 @@ import { TodoItem } from './TodoItem';
 import { KambanColumn } from './KambanColumn';
 
 
-const Kamban = (editTodo) => {
-    Kamban.propTypes = {
+const Kamban = ({editTodo}) => {
+    TodoItem.propTypes = {
 
         editTodo: PropTypes.func.isRequired,
         
