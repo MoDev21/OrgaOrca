@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TodoItem } from './TodoItem';
 
-export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDragLeave, handleDrop, editTodo, toggleTodo, deleteTodo, draggable, copyTodo, removeColumn}) {
+export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDragLeave, handleDrop, editTodo, editStartTime, editStopTime, deleteTodo, draggable, copyTodo, removeColumn}) {
     draggable = draggable === undefined ? true : draggable;
     const [columnTitle, setColumnTitle] = useState(() => {
         const localValue = localStorage.getItem("COLUMN_TITLE")
@@ -25,7 +25,6 @@ export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDrag
         handleDragOver: PropTypes.func.isRequired,
         handleDragLeave: PropTypes.func.isRequired,
         handleDrop: PropTypes.func.isRequired,
-        toggleTodo: PropTypes.func.isRequired,
         deleteTodo: PropTypes.func.isRequired,
         draggable: PropTypes.bool,
         copyTodo: PropTypes.bool,
@@ -33,8 +32,10 @@ export function KambanColumn({boardTodos, boardIndex, handleDragOver, handleDrag
         setIsEditingColumnTitle: PropTypes.func.isRequired,
         setColumnTitle: PropTypes.func.isRequired,
         removeColumn: PropTypes.func.isRequired,
-        
+        editTodo: PropTypes.func.isRequired,
     };
+
+    console.log('kambanColumn editTodo ' + typeof editTodo);
 
     const toggleEditColumnTitle = (e, index) => {
         setIsEditingColumnTitle(!isEditingColumnTitle);

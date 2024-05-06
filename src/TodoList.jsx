@@ -1,5 +1,5 @@
 import {TodoItem} from './TodoItem'
-
+import PropTypes from 'prop-types';
 
 
 /**
@@ -12,7 +12,18 @@ import {TodoItem} from './TodoItem'
  * @returns {JSX.Element} The rendered todo list.
  */
 export function Todolist({ todos, toggleTodo, deleteTodo, isVisible, copyTodo, editTodo }) {
-  console.log('Todolist ' + isVisible)
+  Todolist.propTypes = {
+    completed: PropTypes.bool.isRequired,
+    todos: PropTypes.array.isRequired,
+    toggleTodo: PropTypes.func.isRequired,
+    deleteTodo: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+    copyTodo: PropTypes.bool,
+    editTodo: PropTypes.func.isRequired
+      
+  };
+
+  console.log('todolist editTodo ' + typeof editTodo);
   return( 
     <ul className="list">
       {/*  */}

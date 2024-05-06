@@ -9,6 +9,9 @@ import Calendar from "react-calendar";
 export default function App() {
 
   let isVisible = true; 
+  const [mode, setMode] = useState("kamban");
+  const [modeArray, setModeArray] = useState(["kamban", "calendar"]);
+
   const [todos, setTodos] = useState(() => {
     const localValue = localStorage.getItem("ITEMS")
     if (localValue == null) return []
@@ -47,12 +50,15 @@ export default function App() {
     })
   }
 
-  function editTodo(id, newTitle) {
+  const editTodo = (id, newTitle) => {
     console.log(`newTitle: ${newTitle}`);
-    console.log(`todos: ${todos[1].title}`);  // Log the new title to the console (newTitle);
+    console.log(`todos: ${todos.title}`);  // Log the new title to the console (newTitle);
+    console.log(`id: ${id}`);
     setTodos(currentTodos => {
       return currentTodos.map(todo => {
+        console.log(`todos: ${todo.id}`);
         if(todo.id === id){
+          console.log(`todos: ${todo.title}`);
           return { ...todo, title: newTitle}
           
         }
@@ -62,6 +68,8 @@ export default function App() {
     })
     // Log the updated todos array to the console (`todos);
   }
+
+  console.log(editTodo);
 
   function editStartTime(id, newStartTime) {
     setTodos(currentTodos => {
@@ -149,14 +157,12 @@ export default function App() {
             }}>Completed</button>
           </div>
           {console.log('App ' + isVisible)}
-          {<Todolist todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} isVisible={isVisible}/>}
+          {<Todolist todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} isVisible={isVisible} editTodo={editTodo}/>}
         </div>
         <div className="mainContent"
         style={{width: "100%",
                 height: "100vh"}}>
-          {<Kamban 
-            editTodo={editTodo}
-          />}
+          {<Kamban editTodo={editTodo}/>}
 
         </div>
       </div>

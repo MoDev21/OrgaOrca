@@ -6,6 +6,14 @@ import { KambanColumn } from './KambanColumn';
 
 
 const Kamban = (editTodo) => {
+    Kamban.propTypes = {
+
+        editTodo: PropTypes.func.isRequired,
+        
+    };
+
+    console.log('kamban editTodo ' + typeof editTodo);
+
     const scrollRef = useRef(null);
     const [hscrolling, setHscrolling] = useState(false);
 
@@ -33,8 +41,7 @@ const Kamban = (editTodo) => {
 
     });
 
-    console.log(todos);
-
+    console.log(todos[2]);
 
 
     useEffect(() => {
@@ -77,21 +84,21 @@ const Kamban = (editTodo) => {
         setTodos(todos.slice(0, todos.length - 1));
     }
 
-    function toggleTodo(boardIndex, id, completed) {
-        setTodos(currentTodos => {
-            return currentTodos.map((boardTodos, index) => {
-                if(index === boardIndex){
-                    return boardTodos.map(todo => {
-                        if(todo.id === id){
-                            return { ...todo, completed }
-                        }
-                        return todo;
-                    });
-                }
-                return boardTodos;
-            })
-        })
-    }
+    // function toggleTodo(boardIndex, id, completed) {
+    //     setTodos(currentTodos => {
+    //         return currentTodos.map((boardTodos, index) => {
+    //             if(index === boardIndex){
+    //                 return boardTodos.map(todo => {
+    //                     if(todo.id === id){
+    //                         return { ...todo, completed }
+    //                     }
+    //                     return todo;
+    //                 });
+    //             }
+    //             return boardTodos;
+    //         })
+    //     })
+    // }
     
     function deleteTodo(boardIndex, id) {
         setTodos(currentTodos => {
@@ -119,7 +126,7 @@ const Kamban = (editTodo) => {
                 return currentTodos.map((boardTodos, index) => {
                     if(index === boardIndex){
                         console.log(`boardIndex: ${boardIndex} index: ${index} `);
-                        console.log(boardTodos);
+                        console.log(data);
                         return [...boardTodos, data];
                     }
                     else {
@@ -176,7 +183,7 @@ const Kamban = (editTodo) => {
                     handleDrop={handleDrop}
                     removeColumn={removeColumn}
                     addColumn={addColumn}
-                    toggleTodo={toggleTodo}
+                    // toggleTodo={toggleTodo}
                     deleteTodo={deleteTodo}
                     draggable={true}
                     copyTodo={true}

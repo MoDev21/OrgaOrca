@@ -14,8 +14,7 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
     var [isEditingTime, setIsEditingTime] = useState(false);
 
     TodoItem.propTypes = {
-        completed: PropTypes.bool.isRequired,
-        id: PropTypes.number.isRequired,
+        completed: PropTypes.bool,
         title: PropTypes.string.isRequired,
         startTime: PropTypes.string.isRequired,
         stopTime: PropTypes.string.isRequired,
@@ -24,17 +23,21 @@ export function TodoItem({completed, id, title, startTime, stopTime, toggleTodo,
         isVisible: PropTypes.bool.isRequired,
         draggable: PropTypes.bool,
         copyTodo: PropTypes.bool,
-        editTodo: PropTypes.func.isRequired
+        editTodo: PropTypes.func.isRequired,
         
     };
 
+    console.log('todoitem editTodo ' + typeof editTodo);
     const handleTitleChange = (e) => {
-        
-        setNewTitle(e.target.value);
-        title = newTitle;
-        editTodo.editTodo(e, title);
-        console.log(`columnTitle: ${title}`);
+        const newTitleValue = e.target.value;
+        setNewTitle(newTitleValue);
+        console.log(`id: ${id}`);
+        console.log(`title: ${title}`);
+        console.log(`newTitleValue: ${newTitleValue}`);
+        console.log(typeof editTodo);
+        editTodo(id, newTitleValue);
     }
+
     
     const handleSaveTime = () => {
         setIsEditingTime(false);
